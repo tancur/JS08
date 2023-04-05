@@ -5,22 +5,32 @@ fetch(
 )
   .then((res) => res.json())
   .then((data) => {
-    const countrySelect = document.getElementById("countries");
+    const countriesSelect = document.getElementById("countries");
     const citySelect = document.getElementById("cities");
 
-    for (let country of Object.keys(data)) {
-      const countryOption = document.createElement("option");
-      countryOption.innerText = country;
-      countrySelect.append(countryOption);
-    }
-    countrySelect.onchange = () => {
+    for (const country of Object.keys(data)) {
+      const countriesOption = document.createElement("option");
+      countriesOption.innerText = country;
 
+      countriesSelect.prepend(countriesOption);
+    }
+
+    for (let Afganistan of data.Afghanistan) {
+      const citiesOption = document.createElement("option");
+
+      citiesOption.innerHTML = Afganistan;
+
+      citySelect.prepend(citiesOption);
+    }
+
+    countriesSelect.onchange = () => {
       citySelect.innerHTML = "";
 
       for (const city of data[countries.value]) {
-        const cityOption = document.createElement("option");
-        cityOption.innerText = city;
-        citySelect.append(cityOption);
+        const citiesOption = document.createElement("option");
+        citiesOption.innerText = city;
+
+        citySelect.prepend(citiesOption);
       }
     };
 
@@ -47,7 +57,7 @@ fetch("https://open.er-api.com/v6/latest/USD")
       rate.innerText = `Кросс курс между двумя выбранными валютами составит ${crossRate}`;
       const currencyResult = (amount.value * crossRate).toFixed(2);
       result.innerHTML = `В результате вы получаете ${currencyResult} ${to.value}`;
-    }
+    };
     to.onchange = resultSum;
     from.onchange = resultSum;
     amount.oninput = resultSum;
@@ -92,7 +102,7 @@ let noSwitch = (key, cases, defaultKey = "default") => {
 
 const askDrink = prompt("Що ви любите пити");
 
-  noSwitch(askDrink, {
+noSwitch(askDrink, {
   воду: () => console.log("Найздоровіший вибір!"),
   чай: () => console.log("Смачна та корисна штука. Не перестарайтеся з цукром"),
   пиво: () => console.log("Добре влітку, та в міру"),
